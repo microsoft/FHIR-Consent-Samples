@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "DeFE7CPyIjti75OLx8fGK0g2JvsqVSc09Pg77gdSr+bLGjr5ZGB3LyIjD5jLn6kicSkhB5PTBq8RFQnHNU+Y7Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dakim\\Documents\\emerging-ops\\FHIRBlocks\\API\\consent-api\\consent-api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dakim\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "a6736d8c-a9a2-4eba-8d91-6658e84cb45b",
+		"name": "HLS Hack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AuthorizeGetToken SetBearer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9087b994-be30-4f10-97b4-2da2114b5202",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"bearerToken\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_Id",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "resource",
+							"value": "{{resource}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/{{adtenantId}}/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"{{adtenantId}}",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Consent INFAO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/fhir+json; charset=utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"resourceType\": \"Consent\",\r\n  \"status\": \"active\",\r\n  \"scope\": {\r\n    \"coding\": [\r\n      {\r\n        \"system\": \"http://terminology.hl7.org/CodeSystem/consentscope\",\r\n        \"code\": \"patient-privacy\"\r\n      }\r\n    ]\r\n  },\r\n  \"category\": [\r\n    {\r\n      \"coding\": [\r\n        {\r\n          \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\r\n          \"code\": \"INFAO\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"patient\": {\r\n    \"reference\": \"Patient/2c803e65-2552-44c7-9ed2-4088333e04f7\"\r\n  },\r\n  \"dateTime\": \"2020-11-08\",\r\n  \"organization\": [\r\n    {\r\n      \"reference\": \"Organization/9bb2bf01-18b7-3506-aa07-42debc6fbc80\"\r\n    }\r\n  ],\r\n  \"sourceAttachment\": {\r\n        \"contentType\": \"application/pdf\",\r\n        \"title\": \"Test Attachment\",\r\n        \"url\": \"https://some.fhir.url/Document/1111-2222-33334444-5555-6666\"\r\n    },\r\n  \"policyRule\": {\r\n    \"coding\": [\r\n      {\r\n        \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\r\n        \"code\": \"OPTOUT\"\r\n      }\r\n    ]\r\n  },\r\n  \"provision\": {\r\n    \"period\": {\r\n      \"start\": \"2020-11-08\",\r\n      \"end\": \"2021-11-08\"\r\n    },  \r\n    \"actor\": [\r\n      {\r\n        \"role\": {\r\n          \"coding\": [\r\n            {\r\n              \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\r\n              \"code\": \"CST\"\r\n            }\r\n          ]\r\n        },\r\n        \"reference\": {\r\n          \"reference\": \"Practitioner/00000174-0823-dc8d-0000-00000000e876\"\r\n        }\r\n      },\r\n      {\r\n        \"role\": {\r\n          \"coding\": [\r\n            {\r\n              \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\r\n              \"code\": \"PRCP\"\r\n            }\r\n          ]\r\n        },\r\n        \"reference\": {\r\n          \"reference\": \"Organization/9bb2bf01-18b7-3506-aa07-42debc6fbc80\"\r\n        }\r\n      }\r\n    ],\r\n    \"action\": [\r\n      {\r\n        \"coding\": [\r\n          {\r\n            \"system\": \"http://terminology.hl7.org/CodeSystem/consentaction\",\r\n            \"code\": \"access\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{fhirurl}}/Consent",
+					"host": [
+						"{{fhirurl}}"
+					],
+					"path": [
+						"Consent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Consent INFAO",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/fhir+json; charset=utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"resourceType\": \"Consent\",\r\n    \"id\": \"2501c216-ab84-4f12-9b69-69212f5f5638\",\r\n    \"meta\": {\r\n        \"security\": [\r\n            {\r\n                \"system\": \"https://microsoft.com/fhir/oid\",\r\n                \"code\": \"3050084d-dba9-4c35-8666-3e22c2764a4b\"\r\n            }\r\n        ]\r\n    },\r\n    \"status\": \"active\",\r\n    \"scope\": {\r\n        \"coding\": [\r\n            {\r\n                \"system\": \"http://terminology.hl7.org/CodeSystem/consentscope\",\r\n                \"code\": \"patient-privacy\"\r\n            }\r\n        ]\r\n    },\r\n    \"category\": [\r\n        {\r\n            \"coding\": [\r\n                {\r\n                    \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\r\n                    \"code\": \"INFAO\"\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"patient\": {\r\n        \"reference\": \"Patient/25d4f7c6-37c5-42c6-bf3a-7fbe124928d3\",\r\n        \"display\": \"Alberto639\"\r\n    },\r\n    \"dateTime\": \"2020-11-08\",\r\n    \"organization\": [\r\n        {\r\n            \"reference\": \"Organization/6103d742-31b1-3e24-9552-034b3b85ae3d\"\r\n        }\r\n    ],\r\n    \"sourceAttachment\": {\r\n        \"contentType\": \"application/pdf\",\r\n        \"title\": \"Test Attachment\",\r\n        \"url\": \"https://some.fhir.url/Document/1111-2222-33334444-5555-6666\"\r\n    },\r\n    \"policyRule\": {\r\n        \"coding\": [\r\n            {\r\n                \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\r\n                \"code\": \"OPTOUT\"\r\n            }\r\n        ]\r\n    },\r\n    \"provision\": {\r\n        \"period\": {\r\n            \"start\": \"2020-11-08\",\r\n            \"end\": \"2021-11-08\"\r\n        },\r\n        \"actor\": [\r\n            {\r\n                \"role\": {\r\n                    \"coding\": [\r\n                        {\r\n                            \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\r\n                            \"code\": \"CST\"\r\n                        }\r\n                    ]\r\n                },\r\n                \"reference\": {\r\n                    \"reference\": \"Practitioner/00000174-0823-dc8d-0000-00000000a898\"\r\n                }\r\n            },\r\n            {\r\n                \"role\": {\r\n                    \"coding\": [\r\n                        {\r\n                            \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\r\n                            \"code\": \"PRCP\"\r\n                        }\r\n                    ]\r\n                },\r\n                \"reference\": {\r\n                    \"reference\": \"Organization/6103d742-31b1-3e24-9552-034b3b85ae3d\"\r\n                }\r\n            }\r\n        ],\r\n        \"action\": [\r\n            {\r\n                \"coding\": [\r\n                    {\r\n                        \"system\": \"http://terminology.hl7.org/CodeSystem/consentaction\",\r\n                        \"code\": \"access\"\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{fhirurl}}/Consent?_id=2501c216-ab84-4f12-9b69-69212f5f5638",
+					"host": [
+						"{{fhirurl}}"
+					],
+					"path": [
+						"Consent"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "2501c216-ab84-4f12-9b69-69212f5f5638"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Consent NPP",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/fhir+json; charset=utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"resourceType\": \"Consent\",\r\n  \"status\": \"active\",\r\n  \"scope\": {\r\n    \"coding\": [\r\n      {\r\n        \"system\": \"http://terminology.hl7.org/CodeSystem/consentscope\",\r\n        \"code\": \"patient-privacy\"\r\n      }\r\n    ]\r\n  },\r\n  \"category\": [\r\n    {\r\n      \"coding\": [\r\n        {\r\n          \"system\": \"http://terminology.hl7.org/CodeSystem/consentcategorycodes\",\r\n          \"code\": \"npp\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"patient\": {\r\n    \"reference\": \"Patient/f5e7ee94-bfc6-465e-a64d-f0c90e3d50f5\"\r\n  },\r\n  \"dateTime\": \"2020-01-01\",\r\n  \"performer\": [\r\n    {\r\n      \"reference\": \"Patient/f5e7ee94-bfc6-465e-a64d-f0c90e3d50f5\"\r\n    }\r\n  ],\r\n  \"organization\": [\r\n    {\r\n      \"reference\": \"Organization/6103d742-31b1-3e24-9552-034b3b85ae3d\"\r\n    }\r\n  ],\r\n  \"policyRule\": {\r\n    \"coding\": [\r\n      {\r\n        \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\r\n        \"code\": \"OPTIN\"\r\n      }\r\n    ]\r\n  },\r\n  \"provision\": {\r\n    \"period\": {\r\n      \"start\": \"2020-01-01\",\r\n      \"end\": \"2021-01-01\"\r\n    },\r\n    \"actor\": [\r\n      {\r\n        \"role\": {\r\n          \"coding\": [\r\n            {\r\n              \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\r\n              \"code\": \"PRCP\"\r\n            }\r\n          ]\r\n        },\r\n        \"reference\": {\r\n          \"reference\": \"Practitioner/00000174-0823-dc8d-0000-00000000a898\"\r\n        }\r\n      }\r\n    ],\r\n    \"provision\": [\r\n      {\r\n        \"type\": \"permit\",\r\n        \"actor\": [\r\n          {\r\n            \"role\": {\r\n              \"coding\": [\r\n                {\r\n                  \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\r\n                  \"code\": \"AUT\"\r\n                }\r\n              ]\r\n            },\r\n            \"reference\": {\r\n              \"reference\": \"Practitioner/xcda-author\"\r\n            }\r\n          }\r\n        ],\r\n        \"class\": [\r\n          {\r\n            \"system\": \"urn:ietf:bcp:13\",\r\n            \"code\": \"application/hl7-cda+xml\"\r\n          }\r\n        ],\r\n        \"code\": [\r\n          {\r\n            \"coding\": [\r\n              {\r\n                \"system\": \"http://loinc.org\",\r\n                \"code\": \"34133-9\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"coding\": [\r\n              {\r\n                \"system\": \"http://loinc.org\",\r\n                \"code\": \"18842-5\"\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{fhirurl}}/Consent",
+					"host": [
+						"{{fhirurl}}"
+					],
+					"path": [
+						"Consent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Consent NPP",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/fhir+json; charset=utf-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"resourceType\": \"Consent\",\r\n    \"id\": \"c9cd7636-3e50-48b3-a681-746ca147617c\",\r\n    \"meta\": {\r\n        \"security\": [\r\n            {\r\n                \"system\": \"https://microsoft.com/fhir/oid\",\r\n                \"code\": \"88d9f1ea-0ced-4747-86e6-8f4849234c9e\"\r\n            }\r\n        ]\r\n    },  \r\n  \"status\": \"active\",\r\n  \"scope\": {\r\n    \"coding\": [\r\n      {\r\n        \"system\": \"http://terminology.hl7.org/CodeSystem/consentscope\",\r\n        \"code\": \"patient-privacy\"\r\n      }\r\n    ]\r\n  },\r\n  \"category\": [\r\n    {\r\n      \"coding\": [\r\n        {\r\n          \"system\": \"http://terminology.hl7.org/CodeSystem/consentcategorycodes\",\r\n          \"code\": \"npp\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"patient\": {\r\n    \"reference\": \"Patient/f5e7ee94-bfc6-465e-a64d-f0c90e3d50f5\"\r\n  },\r\n  \"dateTime\": \"2020-01-01\",\r\n  \"performer\": [\r\n    {\r\n      \"reference\": \"Patient/f5e7ee94-bfc6-465e-a64d-f0c90e3d50f5\"\r\n    }\r\n  ],\r\n  \"organization\": [\r\n    {\r\n      \"reference\": \"Organization/6103d742-31b1-3e24-9552-034b3b85ae3d\"\r\n    }\r\n  ],\r\n  \"policyRule\": {\r\n    \"coding\": [\r\n      {\r\n        \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\r\n        \"code\": \"OPTIN\"\r\n      }\r\n    ]\r\n  },\r\n  \"provision\": {\r\n    \"period\": {\r\n      \"start\": \"2020-01-01\",\r\n      \"end\": \"2021-01-01\"\r\n    },\r\n    \"actor\": [\r\n      {\r\n        \"role\": {\r\n          \"coding\": [\r\n            {\r\n              \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\r\n              \"code\": \"PRCP\"\r\n            }\r\n          ]\r\n        },\r\n        \"reference\": {\r\n          \"reference\": \"Practitioner/00000174-0823-dc8d-0000-00000000a898\"\r\n        }\r\n      }\r\n    ],\r\n    \"provision\": [\r\n      {\r\n        \"type\": \"permit\",\r\n        \"actor\": [\r\n          {\r\n            \"role\": {\r\n              \"coding\": [\r\n                {\r\n                  \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\r\n                  \"code\": \"AUT\"\r\n                }\r\n              ]\r\n            },\r\n            \"reference\": {\r\n              \"reference\": \"Practitioner/xcda-author\"\r\n            }\r\n          }\r\n        ],\r\n        \"class\": [\r\n          {\r\n            \"system\": \"urn:ietf:bcp:13\",\r\n            \"code\": \"application/hl7-cda+xml\"\r\n          }\r\n        ],\r\n        \"code\": [\r\n          {\r\n            \"coding\": [\r\n              {\r\n                \"system\": \"http://loinc.org\",\r\n                \"code\": \"34133-9\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"coding\": [\r\n              {\r\n                \"system\": \"http://loinc.org\",\r\n                \"code\": \"18842-5\"\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{fhirurl}}/Consent?_id=c9cd7636-3e50-48b3-a681-746ca147617c",
+					"host": [
+						"{{fhirurl}}"
+					],
+					"path": [
+						"Consent"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "c9cd7636-3e50-48b3-a681-746ca147617c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Consent Filter ID",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/fhir+json; charset=utf-8"
+					}
+				],
+				"url": {
+					"raw": "{{fhirurl}}/Consent?_id=2501c216-ab84-4f12-9b69-69212f5f5638",
+					"host": [
+						"{{fhirurl}}"
+					],
+					"path": [
+						"Consent"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "2501c216-ab84-4f12-9b69-69212f5f5638"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Consent NPP - Security Status Patient Period",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/fhir+json; charset=utf-8"
+					}
+				],
+				"url": {
+					"raw": "{{fhirurl}}/Consent?_security=88d9f1ea-0ced-4747-86e6-8f4849234c9e&status=active&patient=Patient/f5e7ee94-bfc6-465e-a64d-f0c90e3d50f5&period=ge2020-11-09",
+					"host": [
+						"{{fhirurl}}"
+					],
+					"path": [
+						"Consent"
+					],
+					"query": [
+						{
+							"key": "_security",
+							"value": "88d9f1ea-0ced-4747-86e6-8f4849234c9e"
+						},
+						{
+							"key": "status",
+							"value": "active"
+						},
+						{
+							"key": "patient",
+							"value": "Patient/f5e7ee94-bfc6-465e-a64d-f0c90e3d50f5"
+						},
+						{
+							"key": "period",
+							"value": "ge2020-11-09"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -16,28 +16,15 @@ namespace consent_api.Controllers
     {
         // GET: api/consent
         [HttpGet]
-        public string GetConsents([FromQuery(Name = "id")] string tempId)
+        public string GetConsents([FromQuery] string id, [FromQuery] string upn)
         {
             string jsonResult;
-
-            if (tempId != null)
+            List<Consent> consents = new ConsentsStore().getConsents().ToList();
+            var consent = consents.FindAll(a => (a.id == id) && (a.upn == upn));
+            jsonResult = JsonConvert.SerializeObject(new
             {
-                jsonResult = JsonConvert.SerializeObject(new
-                {
-                    results = new ConsentResult() { tempId = tempId, msg = "HELLO WORLD!" }
-                });
-            }
-            else
-            {
-                jsonResult = JsonConvert.SerializeObject(new
-                {
-                    results = new List<ConsentResult>()
-                    {
-                        new ConsentResult() { id = Guid.NewGuid(), upn = Guid.NewGuid(), msg = "Consent 1!" },
-                        new ConsentResult() { id = Guid.NewGuid(), upn = Guid.NewGuid(), msg = "Consent 2!" }
-                    }
-                });
-            }
+                results = consent
+            });
 
             return jsonResult;
         }

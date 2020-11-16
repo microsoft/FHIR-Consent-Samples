@@ -14,6 +14,7 @@ namespace consent_api.Controllers
     [ApiController]
     public class ConsentController : ControllerBase
     {
+        
         // GET: api/consent
         [HttpGet]
         public string GetConsents([FromQuery] string id, [FromQuery] string upn)
@@ -45,6 +46,17 @@ namespace consent_api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+    }
+    [Route("api/patient")]
+    [ApiController]
+    public class PatientController
+    {
+        [HttpGet]
+        public string GetPatient([FromQuery] string id, [FromQuery] string upn)
+        {
+            Hl7.Fhir.Model.Patient p = new Hl7.Fhir.Model.Patient();
+            return (JsonConvert.SerializeObject(p));
         }
     }
 }

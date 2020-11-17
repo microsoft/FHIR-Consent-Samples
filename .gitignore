@@ -1,3 +1,4 @@
 api/bin
 api/obj
-.vs/consent-api
+api/.vs
+.vs

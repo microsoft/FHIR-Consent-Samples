@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj": {}
+  },
+  "projects": {
+    "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj",
+        "projectName": "consent-api-unittest",
+        "projectPath": "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj",
+        "packagesPath": "C:\\Users\\RAOPC\\.nuget\\packages\\",
+        "outputPath": "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\RAOPC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.5.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

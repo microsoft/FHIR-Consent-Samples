@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hl7.Fhir.Model;
 using Newtonsoft.Json;
 using consent_api.Models;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,10 +21,12 @@ namespace consent_api.Controllers
         [HttpGet]
         public string GetConsents([FromQuery] string id, [FromQuery] string upn)
         {
-            var consentObj = new Consent();
+            var consentStore = new ConsentsStore();
             string jsonResult;
-            List<FHIRModel> consents = new ConsentsStore().getMockedConsents().ToList();
-            var consent = consents.FindAll(a => (a.id == id) && (a.upn == upn));
+
+            var fhirconsents = new ConsentsStore().getFHIRConsents();
+            var consent = fhirconsents.Find(a => (a.Id == id) && (a.Meta.Security[0].Code == upn));
+
             jsonResult = JsonConvert.SerializeObject(new
             {
                 results = consent
@@ -57,7 +60,7 @@ namespace consent_api.Controllers
         [HttpGet]
         public string GetPatient([FromQuery] string id, [FromQuery] string upn)
         {
-            Hl7.Fhir.Model.Patient p = new Hl7.Fhir.Model.Patient();
+            Patient p = new Patient();
             return (JsonConvert.SerializeObject(p));
         }
     }

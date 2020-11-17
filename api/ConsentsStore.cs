@@ -13,36 +13,6 @@ namespace consent_api
 {
     public class ConsentsStore
     {
-        public IEnumerable<FHIRModel> getMockedConsents()
-        {
-            return new List<FHIRModel>()
-                    {
-                        new FHIRModel() { id = "1", upn = "u1", status = true, msg = "Consent 1!" },
-                        new FHIRModel() { id = "2", upn = "u2", status = true, msg = "Consent 2!" },
-                        new FHIRModel() { id = "3", upn = "u1", status = true, msg = "Consent 3!" },
-                        new FHIRModel() { id = "4", upn = "u2", status = false, msg = "Consent 4!" }
-                    };
-        }
-
-        public string getJsonConsents()
-        {
-            string json = "";
-
-            try
-            {
-                using (StreamReader r = new StreamReader("Models/consent.json"))
-                {
-                    json = r.ReadToEnd();
-                }
-            } 
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            } 
-            
-            return json;
-        }
-
         public List<Consent> getFHIRConsents()
         {
             return new List<Consent>()

@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj": {}
+    "C:\\Users\\dakim\\Documents\\emerging-ops\\FHIRBlocks\\API\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj": {}
   },
   "projects": {
-    "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj": {
+    "C:\\Users\\dakim\\Documents\\emerging-ops\\FHIRBlocks\\API\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj",
+        "projectUniqueName": "C:\\Users\\dakim\\Documents\\emerging-ops\\FHIRBlocks\\API\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj",
         "projectName": "consent-api-unittest",
-        "projectPath": "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj",
-        "packagesPath": "C:\\Users\\RAOPC\\.nuget\\packages\\",
-        "outputPath": "C:\\code\\FHIRConsentAPI\\microsoft\\FHIR-Consent-Samples\\consent-api-unittest\\obj\\",
+        "projectPath": "C:\\Users\\dakim\\Documents\\emerging-ops\\FHIRBlocks\\API\\FHIR-Consent-Samples\\consent-api-unittest\\consent-api-unittest.csproj",
+        "packagesPath": "C:\\Users\\dakim\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dakim\\Documents\\emerging-ops\\FHIRBlocks\\API\\FHIR-Consent-Samples\\consent-api-unittest\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\RAOPC\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\dakim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -74,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -84,7 +84,6 @@ C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\bin\D
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.TestPlatform.CommunicationUtilities.resources.dll
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.TestPlatform.CrossPlatEngine.resources.dll
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\Debug\netcoreapp3.1\consent-api-unittest.csprojAssemblyReference.cache
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\Debug\netcoreapp3.1\consent-api-unittest.AssemblyInfoInputs.cache
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\Debug\netcoreapp3.1\consent-api-unittest.AssemblyInfo.cs
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\Debug\netcoreapp3.1\consent-api-unittest.csproj.CoreCompileInputs.cache
@@ -92,3 +91,4 @@ C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\D
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\Debug\netcoreapp3.1\consent-api-unittest.dll
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\Debug\netcoreapp3.1\consent-api-unittest.pdb
 C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\Debug\netcoreapp3.1\consent-api-unittest.genruntimeconfig.cache
+C:\code\FHIRConsentAPI\microsoft\FHIR-Consent-Samples\consent-api-unittest\obj\Debug\netcoreapp3.1\consent-api-unittest.csprojAssemblyReference.cache

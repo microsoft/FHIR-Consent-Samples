@@ -2,25 +2,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Microsoft.AspNetCore;
 
 namespace consent_api
 {
     public class Program
     {
+        private static string GetKeyVaultEndpoint() => "https://<YourKeyVaultName>.vault.azure.net";
+
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            BuildWebHost(args).Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IWebHost BuildWebHost(string[] args) =>
+          WebHost.CreateDefaultBuilder(args)
+              .ConfigureAppConfiguration((ctx, builder) =>
+              {
+                  var keyVaultEndpoint = GetKeyVaultEndpoint();
+                  if (!string.IsNullOrEmpty(keyVaultEndpoint))
+                  {
+                      builder.AddAzureKeyVault(new Uri(keyVaultEndpoint), new DefaultAzureCredential(), new KeyVaultSecretManager());
+                  }
+              }
+           ).UseStartup<Startup>()
+            .Build();
     }
+
 }

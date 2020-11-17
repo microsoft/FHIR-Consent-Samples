@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Hl7.Fhir.Model;
 using Newtonsoft.Json;
 using consent_api.Models;
 
@@ -18,8 +19,9 @@ namespace consent_api.Controllers
         [HttpGet]
         public string GetConsents([FromQuery] string id, [FromQuery] string upn)
         {
+            var consentObj = new Consent();
             string jsonResult;
-            List<Consent> consents = new ConsentsStore().getConsents().ToList();
+            List<FHIRModel> consents = new ConsentsStore().getMockedConsents().ToList();
             var consent = consents.FindAll(a => (a.id == id) && (a.upn == upn));
             jsonResult = JsonConvert.SerializeObject(new
             {

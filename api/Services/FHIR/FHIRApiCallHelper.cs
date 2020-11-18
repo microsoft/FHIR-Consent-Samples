@@ -45,9 +45,6 @@ namespace consent_api.Services.FHIR
 
                 string json = await response.Content.ReadAsStringAsync();
                 jsonObject = JsonConvert.DeserializeObject(json) as JObject;
-
-
-
             }
             return jsonObject;
         }

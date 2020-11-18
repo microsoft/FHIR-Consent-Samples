@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Hl7.Fhir.Model;
 using Newtonsoft.Json;
+using consent_api.Services.FHIR;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,23 +12,14 @@ namespace consent_api.Controllers
     [ApiController]
     public class ConsentController : ControllerBase
     {
-        
+        FHIRService fs = new FHIRService();
+
         // GET: api/consent
         [HttpGet]
-        public string GetConsents([FromQuery] string id, [FromQuery] string upn)
+        public async Task<string> GetConsents([FromQuery] string id, [FromQuery] string upn)
         {
-            var consentStore = new ConsentsStore();
-            string jsonResult;
-
-            var fhirconsents = new ConsentsStore().getFHIRConsents();
-            var consent = fhirconsents.Find(a => (a.Id == id) && (a.Meta.Security[0].Code == upn));
-
-            jsonResult = JsonConvert.SerializeObject(new
-            {
-                results = consent
-            });
-
-            return jsonResult;
+            var fhirconsents = await fs.GetConsent(id, "0");
+            return fhirconsents.ToString(); ;
         }
 
         // POST api/<ConsentController>

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>consent_api</RootNamespace>
+    <UserSecretsId>368cf19c-f164-4c65-8c43-cb5cdf80aca8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

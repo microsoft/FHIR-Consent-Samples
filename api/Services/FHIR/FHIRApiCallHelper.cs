@@ -113,5 +113,26 @@ namespace consent_api.Services.FHIR
             }
             return jsonObject;
         }
+
+        public async Task<JObject> PutWebApiAndProcessResultASync(string webApiUrl, string accessToken, Action<JObject> processResult, StringContent data)
+        {
+            JObject jsonObject = null;
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                var defaultRequestHeaders = HttpClient.DefaultRequestHeaders;
+                if (defaultRequestHeaders.Accept == null || !defaultRequestHeaders.Accept.Any(m => m.MediaType == "application/json"))
+                {
+                    HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }
+                defaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
+
+                HttpResponseMessage response = await HttpClient.PutAsync(webApiUrl, data);
+
+
+                string json = await response.Content.ReadAsStringAsync();
+                jsonObject = JsonConvert.DeserializeObject(json) as JObject;
+            }
+            return jsonObject;
+        }
     }
 }

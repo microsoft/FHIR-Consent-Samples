@@ -142,7 +142,8 @@ namespace consent_api.Services.FHIR
                         }
                     case HttpMethodType.Put:
                         {
-                            json = await apiCaller.GetWebApiAndProcessResultASync($"{config.ApiUrl}" + urlExt, result.AccessToken, Display);
+
+                            json = await apiCaller.PutWebApiAndProcessResultASync($"{config.FhirApiUrl}" + urlExt, result.AccessToken, Display, dataContent);
                             break;
                         }
                     case HttpMethodType.Patch:

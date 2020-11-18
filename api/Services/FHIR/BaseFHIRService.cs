@@ -102,7 +102,7 @@ namespace consent_api.Services.FHIR
             // With client credentials flows the scopes is ALWAYS of the shape "resource/.default", as the 
             // application permissions need to be set statically (in the portal or by PowerShell), and then granted by
             // a tenant administrator. 
-            string[] scopes = new string[] { $"{config.ApiUrl}.default" };
+            string[] scopes = new string[] { $"{config.ApiUrl}/.default" };
 
             AuthenticationResult result = null;
             try

@@ -16,7 +16,10 @@ namespace consent_api.Services.FHIR
         /// <summary>
         /// Graph API endpoint, could be public Azure (default) or a Sovereign cloud (US government, etc ...)
         /// </summary>
-        public string ApiUrl { get; set; } = "https://graph.microsoft.com/";
+
+        public string ApiUrl { get; set; } = "https://rg-fhir.azurehealthcareapis.com";
+
+        public string FhirApiUrl { get; set; } = "https://rg-fhir.azurehealthcareapis.com";
 
         /// <summary>
         /// The Tenant is:

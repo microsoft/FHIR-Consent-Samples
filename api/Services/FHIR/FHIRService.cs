@@ -15,6 +15,11 @@ namespace consent_api.Services.FHIR
             JObject json = await RunAsync(urlExt, HttpMethodType.Get, null);
             return json;
         }
-
+        public async Task<JObject> GetConsent(string consentId, string upn)
+        {
+            string url = String.Format("/Consent?id=$1%upn=$2", consentId, upn);
+            JObject json = await RunAsync(url, HttpMethodType.Get, null);
+            return json;
+        }
     }
 }

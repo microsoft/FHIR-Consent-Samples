@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Hl7.Fhir.Model;
-using Newtonsoft.Json;
 using consent_api.Services.FHIR;
 using System.Threading.Tasks;
 
@@ -22,8 +20,6 @@ namespace consent_api.Controllers
             return fhirconsents.ToString(); ;
         }
 
-<<<<<<< HEAD
-=======
         // GET: api/consent
         [HttpPut]
         public void UpdateConsents([FromQuery] string id, [FromQuery] string upn, [FromQuery] string isActive)
@@ -31,18 +27,11 @@ namespace consent_api.Controllers
             fs.UpdateConsent(id, "0", isActive);
         }
 
->>>>>>> 7d2349e... updated the put function but it's not changing the value
         // POST api/<ConsentController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
-
-        //// PUT api/<ConsentController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
 
         // DELETE api/<ConsentController>/5
         [HttpDelete("{id}")]
@@ -50,15 +39,29 @@ namespace consent_api.Controllers
         {
         }
     }
+
     [Route("api/patient")]
     [ApiController]
     public class PatientController
     {
         [HttpGet]
-        public string GetPatient([FromQuery] string id, [FromQuery] string upn)
+        public async Task<string> GetPatient([FromQuery] string id, [FromQuery] string upn)
         {
-            Patient p = new Patient();
-            return (JsonConvert.SerializeObject(p));
+            //GET consent for UPN 
+            // parse CONSENT and make sure it's active
+            // [make sure it's unexpired]
+            //GET patient ID=$id
+            FHIRService fs = new FHIRService();
+            
+            var fhirconsent = await fs.GetConsent("2501c216-ab84-4f12-9b69-69212f5f5638", "0");
+            
+            if (fhirconsent["status"].ToString().Equals("active")) {
+                var patient = await fs.GetPatient(id);
+                return patient.ToString();
+            } else
+            {
+                return "401";
+            }
         }
     }
 }

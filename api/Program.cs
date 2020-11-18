@@ -1,14 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Azure.Identity;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using Microsoft.AspNetCore;
 

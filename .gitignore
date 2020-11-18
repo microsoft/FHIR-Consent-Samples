@@ -2,3 +2,6 @@ api/bin
 api/obj
 api/.vs
 .vs
+consent-api-unittest/bin
+consent-api-unittest/obj
+consent-api-unittest/.vs

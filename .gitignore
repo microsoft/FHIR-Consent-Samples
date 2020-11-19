@@ -5,3 +5,5 @@ api/.vs
 consent-api-unittest/bin/
 consent-api-unittest/obj/
 consent-api-unittest/.vs
+api/secrets.Development.json
+api/secrets.json

@@ -9,7 +9,9 @@ namespace consent_api.Services.FHIR
 {
     public class FHIRService : BaseFHIRervice
     {
-        const string CONSENTURL = "/Consent/{0}";
+        const string CONSENTURL = "/Consent?_security={1}&patient=Patient/{0}";
+
+
 
         public async Task<JObject> GetPatient(string PatientID)
         {
@@ -17,9 +19,9 @@ namespace consent_api.Services.FHIR
             JObject json = await RunAsync(urlExt, HttpMethodType.Get, null);
             return json;
         }
-        public async Task<JObject> GetConsent(string consentId, string upn)
+        public async Task<JObject> GetConsent(string patientId, string upn)
         {
-            string url = String.Format(CONSENTURL, consentId);
+            string url = String.Format(CONSENTURL, patientId, upn);
             JObject json = await RunAsync(url, HttpMethodType.Get, null);
 
             return json;

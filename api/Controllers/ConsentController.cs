@@ -16,7 +16,12 @@ namespace consent_api.Controllers
         [HttpGet]
         public async Task<string> GetConsents([FromQuery] string id, [FromQuery] string upn)
         {
-            var fhirconsents = await fs.GetConsent(id, "0");
+            if (string.IsNullOrEmpty(id)) { 
+                id = "25d4f7c6-37c5-42c6-bf3a-7fbe124928d3";
+                upn = "3050084d-dba9-4c35-8666-3e22c2764a4b";
+            }
+            
+            var fhirconsents = await fs.GetConsent(id, upn);
             return fhirconsents.ToString(); ;
         }
 
@@ -53,14 +58,19 @@ namespace consent_api.Controllers
             //GET patient ID=$id
             FHIRService fs = new FHIRService();
             
-            var fhirconsent = await fs.GetConsent("2501c216-ab84-4f12-9b69-69212f5f5638", "0");
+            var fhirconsent = await fs.GetConsent(id, upn);
+            string isActive  = (string)fhirconsent.SelectToken("entry.[0].resource.status");
+            if (string.IsNullOrEmpty(isActive))
+            {
+                isActive = "false";
+            }
             
-            if (fhirconsent["status"].ToString().Equals("active")) {
+            if (isActive.Equals("active")) {
                 var patient = await fs.GetPatient(id);
                 return patient.ToString();
             } else
             {
-                return "401";
+                return "401 you don't have access or patient does not exsit";
             }
         }
     }

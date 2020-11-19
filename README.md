@@ -8,6 +8,13 @@ This code sits in front of a FHIR endpoint
 1. Clone repo
 2. Open api/consent-api.sln
 3. Run solution
+
+## FHIR Credentials
+Right Click on consent-api project.
+
+- Click '*Manage User Secrets*' and place the *Tenant Id*, *App Client Id*, *App Client Secret* in the appropriate keys.
+
+
 ## Calls available
 ### Pagient
 ```GET /api/patient?id=$ID&upn=$UPN```

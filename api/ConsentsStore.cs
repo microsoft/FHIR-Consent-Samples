@@ -1,13 +1,6 @@
-﻿using consent_api.Models;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Newtonsoft.Json;
-using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.IO;
-using Newtonsoft.Json.Linq;
 
 namespace consent_api
 {

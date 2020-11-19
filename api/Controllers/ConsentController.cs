@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using consent_api.Services.FHIR;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Hl7.Fhir.Model;
-using Newtonsoft.Json;
-using consent_api.Models;
-using Newtonsoft.Json.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,34 +10,26 @@ namespace consent_api.Controllers
     [ApiController]
     public class ConsentController : ControllerBase
     {
-        
+        FHIRService fs = new FHIRService();
+
         // GET: api/consent
         [HttpGet]
-        public string GetConsents([FromQuery] string id, [FromQuery] string upn)
+        public async Task<string> GetConsents([FromQuery] string id, [FromQuery] string upn)
         {
-            var consentStore = new ConsentsStore();
-            string jsonResult;
+            var fhirconsents = await fs.GetConsent(id, "0");
+            return fhirconsents.ToString(); ;
+        }
 
-            var fhirconsents = new ConsentsStore().getFHIRConsents();
-            var consent = fhirconsents.Find(a => (a.Id == id) && (a.Meta.Security[0].Code == upn));
-
-            jsonResult = JsonConvert.SerializeObject(new
-            {
-                results = consent
-            });
-
-            return jsonResult;
+        // GET: api/consent
+        [HttpPut]
+        public void UpdateConsents([FromQuery] string id, [FromQuery] string upn, [FromQuery] string isActive)
+        {
+            fs.UpdateConsent(id, "0", isActive);
         }
 
         // POST api/<ConsentController>
         [HttpPost]
         public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ConsentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
         {
         }
 
@@ -53,15 +39,29 @@ namespace consent_api.Controllers
         {
         }
     }
+
     [Route("api/patient")]
     [ApiController]
     public class PatientController
     {
         [HttpGet]
-        public string GetPatient([FromQuery] string id, [FromQuery] string upn)
+        public async Task<string> GetPatient([FromQuery] string id, [FromQuery] string upn)
         {
-            Patient p = new Patient();
-            return (JsonConvert.SerializeObject(p));
+            //GET consent for UPN 
+            // parse CONSENT and make sure it's active
+            // [make sure it's unexpired]
+            //GET patient ID=$id
+            FHIRService fs = new FHIRService();
+            
+            var fhirconsent = await fs.GetConsent("2501c216-ab84-4f12-9b69-69212f5f5638", "0");
+            
+            if (fhirconsent["status"].ToString().Equals("active")) {
+                var patient = await fs.GetPatient(id);
+                return patient.ToString();
+            } else
+            {
+                return "401";
+            }
         }
     }
 }

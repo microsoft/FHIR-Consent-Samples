@@ -16,7 +16,7 @@ Right Click on consent-api project.
 
 ![Right click menu](https://github.com/microsoft/FHIR-Consent-Samples/blob/feature/removed-creds/img/secrets-menu.png)
 
-![Credentials](https://github.com/microsoft/FHIR-Consent-Samples/blob/feature/removed-creds/img/user-secrets.png)
+![Credentials](https://github.com/microsoft/FHIR-Consent-Samples/blob/feature/removed-creds/img/user-secrets.PNG)
 
 ## Calls available
 ### Pagient

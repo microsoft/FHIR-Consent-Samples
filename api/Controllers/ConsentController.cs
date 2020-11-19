@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using consent_api.Services.FHIR;
 using System.Threading.Tasks;
+using System.Net.Mime;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,9 +30,13 @@ namespace consent_api.Controllers
 
         // GET: api/consent
         [HttpPut]
-        public void UpdateConsents([FromQuery] string id, [FromQuery] string upn, [FromQuery] string isActive)
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<string> UpdateConsents([FromQuery] string id, [FromQuery] string upn, [FromQuery] string isActive)
         {
-            fs.UpdateConsent(id, "0", isActive);
+            var result = await fs.UpdateConsent((id ?? "25d4f7c6-37c5-42c6-bf3a-7fbe124928d3"), (upn ?? "3050084d-dba9-4c35-8666-3e22c2764a4b"), isActive);
+            return result.ToString();
         }
 
         // POST api/<ConsentController>
@@ -62,7 +69,7 @@ namespace consent_api.Controllers
             string isActive  = (string)fhirconsent.SelectToken("entry.[0].resource.status");
             if (string.IsNullOrEmpty(isActive))
             {
-                isActive = "false";
+                isActive = "inActive";
             }
             
             if (isActive.Equals("active")) {

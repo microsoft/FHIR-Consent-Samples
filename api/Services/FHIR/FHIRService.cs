@@ -9,9 +9,8 @@ namespace consent_api.Services.FHIR
 {
     public class FHIRService : BaseFHIRervice
     {
-        const string CONSENTURL = "/Consent?_security={1}&patient=Patient/{0}";
-
-
+        const string CONSENT_URL = "/Consent?patient=Patient/{0}&_security={1}";
+        const string BUNDLE_URL = "/Bundle?patient=Patient/{0}&_security={1}";
 
         public async Task<JObject> GetPatient(string PatientID)
         {
@@ -21,19 +20,21 @@ namespace consent_api.Services.FHIR
         }
         public async Task<JObject> GetConsent(string patientId, string upn)
         {
-            string url = String.Format(CONSENTURL, patientId, upn);
+            string url = String.Format(CONSENT_URL, patientId, upn);
             JObject json = await RunAsync(url, HttpMethodType.Get, null);
 
             return json;
         }
 
-        public async void UpdateConsent(string consentId, string upn, string isActive)
+        public async Task<JObject> UpdateConsent(string patientId, string upn, string isActive)
         {
-            string url = String.Format(CONSENTURL, consentId);
+            string url = String.Format(CONSENT_URL, patientId, upn);
             JObject consent = await RunAsync(url, HttpMethodType.Get, null);
-            consent["status"] = isActive == "true" ? "active" : "inactive";
+            consent["entry"][0]["resource"]["status"] = isActive == "true" ? "active" : "inactive";
 
-            await RunAsync(url, HttpMethodType.Put, new StringContent(consent.ToString()));
+            var json = await RunAsync(String.Format(BUNDLE_URL, patientId, upn), HttpMethodType.Put, new StringContent(consent.ToString()));
+
+            return json;
         }
     }
 }

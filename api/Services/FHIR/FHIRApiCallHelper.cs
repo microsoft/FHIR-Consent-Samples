@@ -126,6 +126,8 @@ namespace consent_api.Services.FHIR
                 }
                 defaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
 
+                data.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+
                 HttpResponseMessage response = await HttpClient.PutAsync(webApiUrl, data);
 
 

@@ -39,6 +39,12 @@ namespace consent_api
 {
     public class Program
     {
+        private static string GetKeyVaultEndpoint() => "https://rg-fhir-ts.vault.azure.net";
+        public static void Main(string[] args)
+        {
+            BuildWebHost(args).Build().Run();
+        }
+
         public static IHostBuilder BuildWebHost(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>

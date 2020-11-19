@@ -11,10 +11,13 @@ This code sits in front of a FHIR endpoint
 
 ## FHIR Credentials
 *Right Click* on th **consent-api** project.
-Click '*Manage User Secrets*' 
+
+- Click '*Manage User Secrets*' 
+
 ![Right click menu](https://github.com/microsoft/FHIR-Consent-Samples/blob/feature/removed-creds/img/secrets-menu.png)
 
-and place the *Tenant Id*, *App Client Id*, *App Client Secret* in the appropriate keys.
+- Place the *Tenant Id*, *App Client Id*, *App Client Secret* in the appropriate keys.
+
 ![Credentials](https://github.com/microsoft/FHIR-Consent-Samples/blob/feature/removed-creds/img/user-secrets.PNG)
 
 ## Calls available

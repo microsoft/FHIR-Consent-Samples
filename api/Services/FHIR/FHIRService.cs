@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Hl7.Fhir.Model;
 
 namespace consent_api.Services.FHIR
 {
@@ -49,12 +50,28 @@ namespace consent_api.Services.FHIR
                 string json = r.ReadToEnd();
                 consent = JsonConvert.DeserializeObject<JObject>(json);
             }
-            
-            //consent["status"] = active == "true" ? "active" : "inactive";
-            //var consentId = consent["id"];
-            //var result = await RunAsync(String.Format(UPDATE_CONSENT_URL, consentId, upn), HttpMethodType.Put, new StringContent(consent.ToString()));
 
-            return consent;
+            //var meta = new Meta()
+            //{
+            //    Security = new List<Coding>
+            //                {
+            //                    new Coding()
+            //                    {
+            //                        System = "https://microsoft.com/fhir/oid",
+            //                        Code = "upn"
+            //                    }
+            //                }
+            //};
+
+            var codingObj = "{ 'System' : 'https://microsoft.com/fhir/oid', 'Code' : '" + upn + "' }";
+        
+            consent["status"] = "active";
+            consent["patient"]["reference"] = "Patient/" + patientId;
+            consent["meta"]["security"][0]["code"] = upn;
+
+            var result = await RunAsync(String.Format(BASEURL), HttpMethodType.Post, new StringContent(consent.ToString()));
+
+            return result;
         }
     }
 }

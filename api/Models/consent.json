@@ -1,6 +1,14 @@
 {
   "resourceType": "Consent",
-  "status": "active",
+  "status": "",
+  "meta": {
+    "security": [
+      {
+        "system": "https://microsoft.com/fhir/oid",
+        "code":  ""
+      }
+    ]
+  },
   "scope": {
     "coding": [
       {
@@ -20,7 +28,7 @@
     }
   ],
   "patient": {
-    "reference": "Patient/f5e7ee94-bfc6-465e-a64d-f0c90e3d50f5"
+    "reference": ""
   },
   "dateTime": "2020-01-01",
   "performer": [

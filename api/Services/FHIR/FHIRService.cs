@@ -14,7 +14,7 @@ namespace consent_api.Services.FHIR
     {
         const string BASEURL = "/Consent";
         const string GET_CONSENT_URL = BASEURL + "?patient=Patient/{0}&_security={1}";
-        const string UPDATE_CONSENT_URL = BASEURL + "?id={0}&_security={1}";
+        const string UPDATE_CONSENT_URL = BASEURL + "?_id={0}&_security={1}";
 
         public async Task<JObject> GetPatient(string PatientID)
         {
@@ -32,7 +32,7 @@ namespace consent_api.Services.FHIR
 
         public async Task<JObject> UpdateConsent(string patientId, string upn, string active)
         {
-            string url = String.Format(UPDATE_CONSENT_URL, patientId, upn);
+            string url = String.Format(GET_CONSENT_URL, patientId, upn);
             JObject json = await RunAsync(url, HttpMethodType.Get, null);
             var consent = json["entry"][0]["resource"];
             consent["status"] = active == "true" ? "active" : "inactive";

@@ -17,14 +17,14 @@ namespace consent_api.Controllers
 
         // GET: api/consent
         [HttpGet]
-        public async Task<string> GetConsents([FromQuery] string id, [FromQuery] string upn)
+        public async Task<string> GetConsents([FromQuery] string patientId, [FromQuery] string upn)
         {
-            if (string.IsNullOrEmpty(id)) { 
-                id = "25d4f7c6-37c5-42c6-bf3a-7fbe124928d3";
-                upn = "3050084d-dba9-4c35-8666-3e22c2764a4b";
+            if (patientId == null || upn == null )
+            {
+                return "Please provide both the patientId, Upn parameters";
             }
-            
-            var fhirconsents = await fs.GetConsent(id, upn);
+
+            var fhirconsents = await fs.GetConsent(patientId, upn);
             return fhirconsents.ToString(); ;
         }
 
@@ -33,9 +33,14 @@ namespace consent_api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<string> UpdateConsents([FromQuery] string id, [FromQuery] string upn, [FromQuery] string active)
+        public async Task<string> UpdateConsents([FromQuery] string patientId, [FromQuery] string upn, [FromQuery] string active)
         {
-            var result = await fs.UpdateConsent((id ?? "25d4f7c6-37c5-42c6-bf3a-7fbe124928d3"), (upn ?? "3050084d-dba9-4c35-8666-3e22c2764a4b"), active);
+            if (patientId == null || upn == null || active == null)
+            {
+                return "Please provide all the required parameters (patientId, upn, and active state)";
+            }
+
+            var result = await fs.UpdateConsent(patientId, upn, active);
             return result.ToString();
         }
 

@@ -33,9 +33,9 @@ namespace consent_api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<string> UpdateConsents([FromQuery] string id, [FromQuery] string upn, [FromQuery] string isActive)
+        public async Task<string> UpdateConsents([FromQuery] string id, [FromQuery] string upn, [FromQuery] string active)
         {
-            var result = await fs.UpdateConsent((id ?? "25d4f7c6-37c5-42c6-bf3a-7fbe124928d3"), (upn ?? "3050084d-dba9-4c35-8666-3e22c2764a4b"), isActive);
+            var result = await fs.UpdateConsent((id ?? "25d4f7c6-37c5-42c6-bf3a-7fbe124928d3"), (upn ?? "3050084d-dba9-4c35-8666-3e22c2764a4b"), active);
             return result.ToString();
         }
 

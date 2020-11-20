@@ -41,8 +41,10 @@ namespace consent_api.Controllers
 
         // POST api/<ConsentController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<string> Post([FromQuery] string patientId, [FromQuery] string upn)
         {
+            var result = await fs.CreateConsent(patientId, upn);
+            return result.ToString();
         }
 
         // DELETE api/<ConsentController>/5

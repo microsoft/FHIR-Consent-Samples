@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,8 +11,9 @@ namespace consent_api.Services.FHIR
 {
     public class FHIRService : BaseFHIRervice
     {
-        const string CONSENT_URL = "/Consent?patient=Patient/{0}&_security={1}";
-        const string UPDATE_URL = "/Consent?id={0}&_security={1}";
+        const string BASEURL = "/Consent";
+        const string GET_CONSENT_URL = BASEURL + "?patient=Patient/{0}&_security={1}";
+        const string UPDATE_CONSENT_URL = BASEURL + "?id={0}&_security={1}";
 
         public async Task<JObject> GetPatient(string PatientID)
         {
@@ -20,7 +23,7 @@ namespace consent_api.Services.FHIR
         }
         public async Task<JObject> GetConsent(string patientId, string upn)
         {
-            string url = String.Format(CONSENT_URL, patientId, upn);
+            string url = String.Format(GET_CONSENT_URL, patientId, upn);
             JObject json = await RunAsync(url, HttpMethodType.Get, null);
 
             return json;
@@ -28,14 +31,30 @@ namespace consent_api.Services.FHIR
 
         public async Task<JObject> UpdateConsent(string patientId, string upn, string active)
         {
-            string url = String.Format(CONSENT_URL, patientId, upn);
+            string url = String.Format(UPDATE_CONSENT_URL, patientId, upn);
             JObject json = await RunAsync(url, HttpMethodType.Get, null);
             var consent = json["entry"][0]["resource"];
             consent["status"] = active == "true" ? "active" : "inactive";
             var consentId = consent["id"];
-            var result = await RunAsync(String.Format(UPDATE_URL, consentId, upn), HttpMethodType.Put, new StringContent(consent.ToString()));
+            var result = await RunAsync(String.Format(UPDATE_CONSENT_URL, consentId, upn), HttpMethodType.Put, new StringContent(consent.ToString()));
 
             return result;
+        }
+
+        public async Task<JObject> CreateConsent(string patientId, string upn)
+        {
+            JObject consent;
+            using(StreamReader r = File.OpenText(Directory.GetCurrentDirectory() + "/Models/consent.json"))
+            {
+                string json = r.ReadToEnd();
+                consent = JsonConvert.DeserializeObject<JObject>(json);
+            }
+            
+            //consent["status"] = active == "true" ? "active" : "inactive";
+            //var consentId = consent["id"];
+            //var result = await RunAsync(String.Format(UPDATE_CONSENT_URL, consentId, upn), HttpMethodType.Put, new StringContent(consent.ToString()));
+
+            return consent;
         }
     }
 }

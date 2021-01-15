@@ -2,7 +2,7 @@
 Contains FHIR sample for  Consent based authorization
 
 **How we envision our Consent API would work**: 
-![PPT Presentation](https://github.com/microsoft/FHIR-Consent-Samples/blob/main/doc/consent.pptx)
+[PPT Presentation](https://github.com/microsoft/FHIR-Consent-Samples/blob/main/doc/consent.pptx)
 
 
 ## FHIR Credentials

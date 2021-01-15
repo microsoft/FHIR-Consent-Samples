@@ -1,6 +1,13 @@
 # FHIR-Consent-Samples
 Contains FHIR sample for  Consent based authorization
 
+**How we envision our Consent API would work**: 
+![PPT Presentation](https://github.com/microsoft/FHIR-Consent-Samples/doc/consent.pptx)
+
+
+## FHIR Credentials
+*Right Click* on th **consent-api** project.
+
 # Architecture
 This code sits in front of a FHIR endpoint
 
@@ -14,11 +21,11 @@ This code sits in front of a FHIR endpoint
 
 - Click '*Manage User Secrets*' 
 
-![Right click menu](https://github.com/microsoft/FHIR-Consent-Samples/blob/feature/removed-creds/img/secrets-menu.png)
+![Right click menu](https://github.com/microsoft/FHIR-Consent-Samples/img/secrets-menu.png)
 
 - Place the *Tenant Id*, *App Client Id*, *App Client Secret* in the appropriate keys.
 
-![Credentials](https://github.com/microsoft/FHIR-Consent-Samples/blob/feature/removed-creds/img/user-secrets.PNG)
+![Credentials](https://github.com/microsoft/FHIR-Consent-Samples/img/user-secrets.PNG)
 
 ## Calls available
 ### Pagient
